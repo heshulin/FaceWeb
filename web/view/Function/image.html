@@ -1,0 +1,263 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<link rel="shortcut icon" href="favicon.ico">
+
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="css/icomoon.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<!-- Flexslider  -->
+	<link rel="stylesheet" href="css/flexslider.css">
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="css/style.css">
+
+	<!-- Modernizr JS -->
+	<script src="js/modernizr-2.6.2.min.js"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<script src="js/connect.js"></script>
+	<![endif]-->
+		<style>
+			.vidmask-body-back {
+				background: url(videooverlay1.png) repeat;
+				opacity: 100;
+				min-height: 100%;
+				min-width: 100%;
+				position: fixed;
+				display: block;
+				-webkit-filter: grayscale(100%)
+			}
+
+			video {
+				position: fixed;
+				width: auto;
+				height: auto;
+				opacity: 100;
+			}
+		</style>
+	</head>
+	<body onload="init()">
+	<div id="fh5co-page">
+		<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
+		<aside id="fh5co-aside" role="complementary" class="border js-fullheight">
+
+			<h1 id="fh5co-logo"><a href="index.html">天桥乐队图片站</a></h1>
+			<nav id="fh5co-main-menu" role="navigation">
+				<ul>
+					<li><a href="index.html">我的表情包</a></li>
+					<li><a href="word.html">文字表情包</a></li>
+					<li><a href="voice.html">声音表情包</a></li>
+					<li class="fh5co-active"><a href="image.html">图片表情包</a></li>
+					<li><a href="gif.html">gif表情包</a></li>
+					<li><a href="pay.html">我 要 充 值</a></li>
+					<br><br><br><br><br><br>
+					<li><a id="onesmoney"></a></li>
+				</ul>
+			</nav>
+
+
+
+		</aside>
+
+		<div id="fh5co-main">
+
+			<aside id="fh5co-hero" class="js-fullheight">
+				<div class="flexslider js-fullheight">
+					<ul class="slides">
+						<li>
+							<!--style="background-image: url(images/img_bg_1.jpg);"-->
+							<div class="overlay"></div>
+							<video autoplay loop width="100%" z-index="-1">
+								<source src="天桥乐队.mp4">
+							</video>
+							<div class="vidmask-body-back" style="opacity: 1;">&nbsp;</div>
+							<div class="container-fluid">
+								<div class="row">
+									<div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
+										<div class="slider-text-inner">
+											<center>
+												<table><tr>
+													<td><img id="imageimage1" src="" style="width:auto;height: 300px; margin: 10% 0 5% 0;display: none;"/><input type="file" class="fileinput" name="imgOne" id="imgOne" onchange="preImg1(this.id,'photo');" />
+													<td><img id="imageimage2" src="" style="width:auto;height: 300px; margin: 10% 0 5% 0;display: none;"/><input type="file" class="fileinput" name="imgTwo" id="imgTwo" onchange="preImg2(this.id,'photo');" />
+												</tr></table>
+												<img id="imageimage3" src="" style="width:auto;height: 300px; margin: 10% 0 5% 0;display: none;"/>
+											</center>
+
+											<br>
+											<button id="imagebutton" class="btn btn-info btn-default"  style="border-radius: 15px" type="submit" onclick="hslimageConnect()">
+												¥2确认购买
+											</button>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</li>
+
+
+					</ul>
+				</div>
+			</aside>
+
+		</div>
+	</div>
+
+	<script>
+        function init() {
+            var storage = window.localStorage;
+            var tempCookie = storage["userphone"];
+            $.ajax({
+                type: "get",
+                url: "../../getonemoney",
+                data: {
+                    userphone: tempCookie,
+                },
+                dataType: "json",
+                success: function (data) {//data为返回值
+                    var getonesmoney = document.getElementById("onesmoney");
+                    getonesmoney.innerHTML = "账户余额¥" + data.money;
+                },
+                error: function () {
+                    var getonesmoney = document.getElementById("onesmoney");
+                    getonesmoney.innerHTML = "网络状况差";
+                }
+            });
+        }
+
+        function getFileUrl(sourceId) {
+            var url;
+            if (navigator.userAgent.indexOf("MSIE")>=1) { // IE
+                url = document.getElementById(sourceId).value;
+            } else if(navigator.userAgent.indexOf("Firefox")>0) { // Firefox
+                url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
+            } else if(navigator.userAgent.indexOf("Chrome")>0) { // Chrome
+                url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
+            }
+            return url;
+        }
+        function preImg1(sourceId, targetId) {
+            var url = getFileUrl(sourceId);
+            var imgPre = document.getElementById(targetId);
+
+            var imageimage1 =document.getElementById("imageimage1");
+            imageimage1.src = url;
+            imageimage1.style.display="block";
+        }
+        function preImg2(sourceId, targetId) {
+            var url = getFileUrl(sourceId);
+            var imgPre = document.getElementById(targetId);
+
+            var imageimage2 =document.getElementById("imageimage2");
+            imageimage2.src = url;
+            imageimage2.style.display="block";
+        }
+        function hslimageConnect() {
+            var storage=window.localStorage;
+            var tempCookie = storage["userphone"];
+            var formdata = new FormData();
+            var files1 = $('#imgOne').prop('files');
+            formdata.append('image1',files1[0]);
+            var files2 = $('#imgTwo').prop('files');
+            formdata.append('image2',files2[0]);
+            formdata.append('userphone',tempCookie);
+            $.ajax({
+                type: "post",
+                url: "../../imageimage",
+                data: formdata,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: "json",
+                success: function(data) {//data为返回值
+                    var data = eval(data);
+                    if(data.success == true) {//data为 url跳转网页中传回的值。
+                        var storage = window.localStorage;
+                        var tempCookie = storage["userphone"];
+                        $.ajax({
+                            type: "get",
+                            url: "../../getonemoney",
+                            data: {
+                                userphone: tempCookie,
+                            },
+                            dataType: "json",
+                            success: function (data) {//data为返回值
+                                var getonesmoney = document.getElementById("onesmoney");
+                                getonesmoney.innerHTML = "账户余额¥" + data.money;
+                            },
+                            error: function () {
+                                var getonesmoney = document.getElementById("onesmoney");
+                                getonesmoney.innerHTML = "网络状况差";
+                            }
+                        });
+                        var imageimage1 =document.getElementById("imageimage1");
+                        imageimage1.style.display="none";
+                        var imageimage2 =document.getElementById("imageimage2");
+                        imageimage2.style.display="none";
+
+                        var imageimage3 =document.getElementById("imageimage3");
+                        imageimage3.src = data.data;
+                        imageimage3.style.display="block";
+
+                        var imagebutton =document.getElementById("imagebutton");
+                        imagebutton.innerHTML = "再次购买";
+                        imagebutton.onclick=function(){
+                            var imageimage3 =document.getElementById("imageimage3");
+                            imageimage3.style.display="none";
+                            var imagebutton =document.getElementById("imagebutton");
+                            imagebutton.innerHTML = "￥2确认购买";
+                            imagebutton.onclick=hslimageConnect;
+                        };
+                        alert(data.msg);
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+	</script>
+
+	<!-- jQuery -->
+	<script src="js/jquery.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="js/jquery.waypoints.min.js"></script>
+	<!-- Flexslider -->
+	<script src="js/jquery.flexslider-min.js"></script>
+	
+	
+	<!-- MAIN JS -->
+	<script src="js/main.js"></script>
+
+	</body>
+</html>
+
